@@ -1,12 +1,12 @@
 clc;
-img = imread('people.jpg');
+img = imread('image.jpg');
 gray = rgb2gray(img);
 image = imresize(gray,[500 500]);
 
 
 xy = zeros(1,2);
 i =1;
-for j = 1:3
+for j = 1:5
     k =uint32(5*((1.414)^(j-1)));
     for row = 1:k:(501-k)
         for col = 1:k:(501-k)
@@ -23,7 +23,7 @@ for j = 1:3
     end
 end  
 points = cornerPoints(xy);
-marker = insertMarker(image,points,'circle','size',5 );
+marker = insertMarker(image,points,'circle','size',2 );
 imshow(marker)
 
 
