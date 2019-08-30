@@ -6,25 +6,27 @@ image = imresize(gray,[500 500]);
 
 xy = zeros(1,2);
 i =1;
-for j = 1:5
-    k =uint32(5*((1.414)^(j-1)));
-    for row = 1:k:(501-k)
-        for col = 1:k:(501-k)
+
+    k =5;
+    for row = 1:k:6
+        for col = 1:k:6
             points = detectMinEigenFeatures(image,'ROI',[row,col,k,k]);
-            strongest = selectStrongest(points,2);
-            count=strongest.Count
+            strongest = selectStrongest(points,1);
+            count=strongest.Count;
             if count>0
-                xy(i,1) = uint32(strongest.Location(1));
-                xy(i,2) = uint32(strongest.Location(2));
+                xy(i,1) = floor(strongest.Location(1));
+                xy(i,2) = floor(strongest.Location(2));
                 i = i+1;
                 %count = count - 1;
+                
             end
         end
     end
-end  
+    
 points = cornerPoints(xy);
-marker = insertMarker(image,points,'circle','size',2 );
+marker = insertMarker(image(1:7,1:7),points,'circle','size',1);
 imshow(marker)
+truesize([400 500])
 
 
 %points = detectMinEigenFeatures(xy);
