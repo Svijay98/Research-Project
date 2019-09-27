@@ -1,0 +1,47 @@
+clc;
+vidReader = VideoReader('visiontraffic.avi','CurrentTime',12); %Read a video file. Specify the timestamp of the frame to be read.
+frameRGB = readFrame(vidReader); %Read video frame from video file
+frameGray = rgb2gray(frameRGB); %Convert to gray scale images
+%imshow(frameRGB);
+x=[-1 0 1];
+sx=conv2(x,frameGray);
+sy=conv2(x',frameGray);
+bin = zeros(1,8);
+for r=1:size(sx,1)/16
+      for c=1:size(sx,2)/16
+          m=sqrt(sx(r,c)^2+sy(r,c)^2);
+          o=atan2(sy(r,c),sx(r,c));
+          v=rad2deg(abs(o));
+             if v>11.25 && v<=33.75
+                    bin(1)=bin(1)+ m*(33.75-v)/22.5;
+                    bin(2)=bin(2)+ m*(v-11.25)/22.5;
+             elseif v>33.75 && v<=56.25
+                    bin(2)=bin(2)+ m*(56.25-v)/22.5;                 
+                    bin(3)=bin(3)+ m*(v-33.75)/22.5;
+             elseif v>56.25 && v<=78.75
+                    bin(3)=bin(3)+ m*(78.75-v)/22.5;
+                    bin(4)=bin(4)+ m*(v-56.25)/22.5;
+             elseif v>78.75 && v<=101.25
+                    bin(4)=bin(4)+ m*(101.25-v)/22.5;
+                    bin(5)=bin(5)+ m*(v-78.75)/22.5;
+             elseif v>101.25 && v<=123.75
+                    bin(5)=bin(5)+ m*(123.75-v)/22.5;
+                    bin(6)=bin(6)+ m*(v-101.25)/22.5;
+             elseif v>123.75 && v<=146.25
+                    bin(6)=bin(6)+ m*(146.25-v)/22.5;
+                    bin(7)=bin(7)+ m*(v-123.75)/22.5;
+             elseif v>146.25 && v<=168.75
+                    bin(7)=bin(7)+ m*(168.75-v)/22.5;
+                    bin(8)=bin(8)+ m*(v-146.25)/22.5;
+             elseif v>=0 && v<=11.25
+                    bin(1)=bin(1)+ m*(v+10)/22.5;
+                    bin(8)=bin(8)+ m*(10-v)/22.5;
+             elseif v>168.75 && v<=180
+                    bin(8)=bin(8)+ m*(191.25-v)/22.5;
+                    bin(1)=bin(1)+ m*(v-168.75)/22.5;
+             end
+          
+      end
+end
+figure;
+stem(bin);
