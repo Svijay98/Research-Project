@@ -10,7 +10,7 @@ function h_sum = xsclbp(cuboid)
                 b = (((cuboid(i+1,j+1,t) - cuboid(i-1, j-1,t))+ cuboid(i,j,t) + (cuboid(i+1,j+1,t)-cuboid(i,j,t))*(cuboid(i-1,j-1,t)-cuboid(i,j,t))) > T ) * 2^1 ;        
                 c = (((cuboid(i+1,j,t) - cuboid(i-1, j,t))+ cuboid(i,j,t) + (cuboid(i+1,j,t)-cuboid(i,j,t))*(cuboid(i-1,j,t)-cuboid(i,j,t))) > T ) * 2^2 ;
                 d = (((cuboid(i+1,j-1,t) - cuboid(i-1, j+1,t))+ cuboid(i,j,t) + (cuboid(i+1,j-1,t)-cuboid(i,j,t))*(cuboid(i-1,j+1,t)-cuboid(i,j,t))) > T ) * 2^3 ;
-                e=a+b+c+d;ss
+                e=a+b+c+d;
                 h(e+1) = h(e+1) + 1;
             end
         end
